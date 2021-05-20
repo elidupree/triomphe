@@ -23,8 +23,8 @@ use super::Arc;
 #[repr(transparent)]
 pub struct ArcBorrow<'a, T: ?Sized + 'a>(pub(crate) &'a T);
 
-impl<'a, T> Copy for ArcBorrow<'a, T> {}
-impl<'a, T> Clone for ArcBorrow<'a, T> {
+impl<'a, T: ?Sized> Copy for ArcBorrow<'a, T> {}
+impl<'a, T: ?Sized> Clone for ArcBorrow<'a, T> {
     #[inline]
     fn clone(&self) -> Self {
         *self
@@ -83,7 +83,7 @@ impl<'a, T> ArcBorrow<'a, T> {
     }
 }
 
-impl<'a, T> Deref for ArcBorrow<'a, T> {
+impl<'a, T: ?Sized> Deref for ArcBorrow<'a, T> {
     type Target = T;
 
     #[inline]
